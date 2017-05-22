@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jozif.dao.mapper.UserMapper">
+    <resultMap id="user" type="org.jozif.entity.User">
+        <id property="id" column="id" javaType="INTEGER" jdbcType="INTEGER"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="salt" column="salt" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="role" column="role" jdbcType="VARCHAR"/>
+        <result property="clazz" column="clazz" jdbcType="VARCHAR"/>
+        <result property="loginIp" column="login_ip" jdbcType="VARCHAR"/>
+        <result property="loginFailureCount" column="login_failure_count" javaType="INTEGER" jdbcType="INTEGER"/>
+        <result property="isDel" column="is_del" javaType="INTEGER" jdbcType="TINYINT"/>
+        <result property="isStop"  column="is_stop" javaType="INTEGER" jdbcType="TINYINT"/>
+        <result property="addTime" column="add_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="lastTime" column="last_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_Alias_List">
+        id,
+        password as password,
+        salt as salt,
+        nick_name as nickName,
+        email as email,
+        phone_number as phoneNumber,
+        role as role,
+        clazz as clazz,
+        login_ip as loginIp,
+        wx_id as wxId,
+        clazz as clazz,
+        login_failure_count as loginFailureCount,
+        is_del as isDel,
+        is_stop as isStop,
+        add_time as addTime,
+        update_time as updateTime,
+        last_time as lastTime
+    </sql>
+    <select id="selectUserById" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM `user` WHERE id = #{user.id};
+    </select>
+
+    <update id="updateUserById" parameterType="org.jozif.entity.User">
+        UPDATE user SET
+        <if test="user.password!=null and user.password!=''">
+            password = #{user.password},
+        </if>
+        <if test="user.salt!=null and user.salt!=''">
+            salt = #{user.salt},
+        </if>
+        <if test="user.nickName!=null and user.nickName!=''">
+            nick_name = #{user.nickName},
+        </if>
+        <if test="user.email!=null and user.email!=''">
+            email = #{user.email},
+        </if>
+        <if test="user.phoneNumber!=null and user.phoneNumber!=''">
+            phone_number = #{user.phoneNumber},
+        </if>
+        <if test="user.role!=null and user.role!=''">
+            role = #{user.role},
+        </if>
+        <if test="user.wxId!=null and user.wxId!=''">
+            wx_id = #{user.wxId},
+        </if>
+        <if test="user.clazz!=null and user.clazz!=''">
+            clazz = #{user.clazz},
+        </if>
+        <if test="user.loginIp!=null and user.loginIp!=''">
+            login_ip = #{user.loginIp},
+        </if>
+        <if test="user.isDel!=null and user.isDel!=-1">
+            is_del = #{user.isDel},
+        </if>
+        <if test="user.isStop!=null and user.isStop!=-1">
+            is_stop = #{user.isStop},
+        </if>
+        <if test="user.addTime!=null">
+            add_time = #{user.addTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="user.updateTime!=null">
+            update_time = #{user.updateTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="user.lastTime!=null">
+            last_time = #{user.lastTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="user.loginFailureCount!=null and user.loginFailureCount!=-1">
+            login_failure_count = #{user.loginFailureCount},
+        </if>
+        id = #{user.id}
+        WHERE id = #{user.id};
+    </update>
+
+    <insert id="addUser" parameterType="org.jozif.entity.User">
+        INSERT INTO user (
+        <if test="user.password!=null and user.password!=''">
+            password,
+        </if>
+        <if test="user.salt!=null and user.salt!=''">
+            salt,
+        </if>
+        <if test="user.role!=null and user.role!=''">
+            role,
+        </if>
+        <if test="user.clazz!=null and user.clazz!=''">
+            clazz,
+        </if>
+        <if test="user.loginIp!=null and user.loginIp!=''">
+            login_ip,
+        </if>
+        <if test="user.nickName!=null and user.nickName!=''">
+            nick_name,
+        </if>
+            email
+        ) VALUES (
+        <if test="user.password!=null and user.password!=''">
+            #{user.password},
+        </if>
+        <if test="user.salt!=null and user.salt!=''">
+            #{user.salt},
+        </if>
+        <if test="user.role!=null and user.role!=''">
+            #{user.role},
+        </if>
+        <if test="user.clazz!=null and user.clazz!=''">
+            #{user.clazz},
+        </if>
+        <if test="user.loginIp!=null and user.loginIp!=''">
+            #{user.loginIp},
+        </if>
+        <if test="user.nickName!=null and user.nickName!=''">
+            #{user.nickName},
+        </if>
+            #{user.email}
+        )
+
+    </insert>
+
+    <select id="selectUserByEmail" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM user WHERE email = #{user.email};
+    </select>
+
+    <select id="selectUserByWxId" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM user WHERE wx_id = #{user.wxId};
+    </select>
+
+
+    <select id="selectUserByPhoneNumber" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM user WHERE phone_number = #{user.phoneNumber};
+    </select>
+
+    <select id="selectUserByNickName" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM user WHERE nick_name = #{user.nickName};
+    </select>
+
+    <select id="selectAllUser" resultType="org.jozif.entity.User">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM user
+    </select>
+
+    <select id="selectUserByClazzId" resultType="org.jozif.entity.User">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM `user`
+        WHERE `clazz` LIKE concat('%,',#{user.clazz})
+        OR `clazz` LIKE concat(#{user.clazz},',%')
+        OR `clazz` LIKE concat('%,',#{user.clazz},',%')
+        OR `clazz` LIKE #{user.clazz}
+    </select>
+
+
+</mapper>

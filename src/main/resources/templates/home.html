@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <title>Spring Boot</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"
+        rel="stylesheet" media="screen"/>
+  <link href="/css/styles.css"
+        rel="stylesheet"
+        media="screen"/>
+  <link href="/webjars/bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css"/>
+  <script src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="col-ld-6 col-ld-offset-3">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">北信科校园网流量分析系统</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">HTTP仪表盘 <span class="sr-only">(current)</span></a></li>
+          <li><a href="#">DNS仪表盘</a></li>
+          <li><a href="#">DNS仪表盘</a></li>
+          <li><a href="#">DNS仪表盘</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-user"
+                                aria-hidden="true"></span><span th:text="' '+${session.user.nickName}"> user</span></a></li>
+          <li><a href="/pass/logout">注销</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+<div sec:authorize="hasRole('ROLE_STUDENT')">
+  <!--<div>-->
+  <div class="container">
+    <div class="row vertical-offset-100">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default"
+             style="border: 1px solid rgba(1, 2, 2, 0.1);border-radius: 4px;box-shadow: 0 15px 25px rgba(1, 2, 2, 0.1);padding: 20px 20px;">
+          <div class="" style="padding: 10px 15px;">
+            <h3 class="panel-title">更新信息</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="nav nav-tabs nav-justified">
+              <li role="presentation" class="active"><a href="#" onclick="showBasicForm()">更新基本信息</a></li>
+              <li role="presentation"><a href="#" onclick="showPasswordForm()">更新密码</a></li>
+            </ul>
+            <br/>
+            <form th:action="@{/student/updateBasic}" method="post" id="studentUpdateBasicForm">
+              <fieldset>
+                <div hidden="true" class="form-group">
+                  <input class="form-control" name="id" th:value="${session.user.id}" value="" type="text"/>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="电子邮箱" name="email" type="text" value="" th:value="${session.user.email}"/>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="昵称" name="nickName" type="text" value="" th:value="${session.user.nickName}"/>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="手机号" name="phoneNumber" type="text" value="" th:value="${session.user.phoneNumber}"/>
+                </div>
+                <div th:if="${msg}">
+                  <div class="alert alert-danger alert-dismissible" role="alert" th:if="${msg.status eq 'failure'}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span th:text="${msg.content}">更新失败。</span>
+                  </div>
+                  <div class="alert alert-success alert-dismissible" role="alert" th:if="${msg.status eq 'success'}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span th:text="${msg.content}">更新成功。</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input class="btn btn-lg btn-primary d btn-block" type="submit" value="更新基本信息"/>
+                </div>
+              </fieldset>
+            </form>
+            <form hidden="true" th:action="@{/student/updatePassword}" method="post" id="studentUpdatePasswordForm">
+              <fieldset>
+                <div hidden="true" class="form-group">
+                  <input class="form-control" name="id" th:value="${session.user.id}" value="" type="text"/>
+                </div>
+                <div hidden="true" class="form-group">
+                  <input class="form-control" name="hiddenEmail" th:value="${session.user.email}" value="" type="text"/>
+                </div>
+                <div hidden="true" class="form-group">
+                  <input class="form-control" name="hiddenPhoneNumber" th:value="${session.user.phoneNumber}" value="" type="text"/>
+                </div>
+                <div hidden="true" class="form-group">
+                  <input class="form-control" name="hiddenNickName" th:value="${session.user.nickName}" value="" type="text"/>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" placeholder="旧密码" name="oldPassword" type="password" value=""/>
+                </div>
+                <div class="form-group">
+                <input class="form-control" placeholder="密码" name="password" type="password" value=""/>
+                </div>
+                <div class="form-group">
+                <input class="form-control" placeholder="重复密码" name="passwordCheck" type="password" value=""/>
+                </div>
+                <div th:if="${msg}">
+                  <div class="alert alert-danger alert-dismissible" role="alert" th:if="${msg.status eq 'failure'}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span th:text="${msg.content}">更新失败。</span>
+                  </div>
+                  <div class="alert alert-success alert-dismissible" role="alert" th:if="${msg.status eq 'success'}">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span th:text="${msg.content}">更新成功。</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input class="btn btn-lg btn-primary d btn-block" type="submit" value="更新密码"/>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div sec:authorize="hasRole('ROLE_TEACHER')">
+  <div class="container">
+    <div class="row vertical-offset-100">
+      <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default"
+             style="border: 1px solid rgba(1, 2, 2, 0.1);border-radius: 4px;box-shadow: 0 15px 25px rgba(1, 2, 2, 0.1);padding: 20px 20px;">
+          <div class="" style="padding: 10px 15px;">
+            <h3 class="panel-title">TEACHER权限可见</h3>
+          </div>
+          <div class="panel-body">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/js/myBasic.js"></script>
+<script src="/js/home.js"></script>
+<script src="/webjars/bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+</body>
+</html>
