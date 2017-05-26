@@ -127,15 +127,6 @@ $(function () {
             }
         })
 });
-function showPasswordForm() {
-    $("#studentUpdateBasicForm").hide();
-    $("#studentUpdatePasswordForm").show();
-}
-function showBasicForm() {
-    $("#studentUpdateBasicForm").show();
-    $("#studentUpdatePasswordForm").hide();
-}
-
 $(".nav li").each(function () {
     $(this).click(function () {
         $(".nav li").removeClass("active");

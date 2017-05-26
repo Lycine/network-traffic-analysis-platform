@@ -20,8 +20,6 @@ public class User {
     private String phoneNumber;
     private String role;
     private String loginIp;
-    private String wxId;
-    private String clazz;
     private int loginFailureCount;
     private int isDel;
     private int isStop;
@@ -57,8 +55,6 @@ public class User {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", role='" + role + '\'' +
                 ", loginIp='" + loginIp + '\'' +
-                ", wxId='" + wxId + '\'' +
-                ", clazz='" + clazz + '\'' +
                 ", loginFailureCount=" + loginFailureCount +
                 ", isDel=" + isDel +
                 ", isStop=" + isStop +

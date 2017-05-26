@@ -50,12 +50,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean isDuplicateWxId(User user) {
-        user = userDao.selectUserByWxId(user);
-        return null != user;
-    }
-
-    @Override
     public Boolean isDuplicatePhoneNumber(User user) {
         user = userDao.selectUserByPhoneNumber(user);
         return null != user;
@@ -88,8 +82,5 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(page, rows);
         return userDao.selectAllUser();
     }
-    @Override
-    public List<User> userFindByClazzId(User user){
-        return userDao.selectUserByClazzId(user);
-    }
+
 }

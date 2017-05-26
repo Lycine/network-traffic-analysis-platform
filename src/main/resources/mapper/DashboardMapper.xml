@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jozif.dao.mapper.DashboardMapper">
+    <resultMap id="Dashboard" type="org.jozif.entity.Dashboard">
+        <id property="id" column="id" javaType="INTEGER" jdbcType="INTEGER"/>
+        <result property="note" column="note" jdbcType="VARCHAR"/>
+        <result property="link" column="link" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="from" column="from" jdbcType="INTEGER"/>
+        <result property="addTime" column="add_time"  javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="isDel" column="is_del" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_Alias_List">
+        `id` as id,
+        `note` as note,
+        `link` as link,
+        `title` as title,
+        `content` as content,
+        `from` as `from`,
+        `add_time` as  addTime,
+        `is_del` as isDel
+    </sql>
+    <select id="selectDashboardById" parameterType="org.jozif.entity.Dashboard" resultType="org.jozif.entity.Dashboard">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM `Dashboard` WHERE id = #{dashboard.id};
+    </select>
+
+    <insert id="dashboardAdd" parameterType="org.jozif.entity.Dashboard">
+        INSERT INTO Dashboard (
+        link,
+        title,
+        content,
+        `from`
+        ) VALUES (
+        #{dashboard.link},
+        #{dashboard.title},
+        #{dashboard.content},
+        #{dashboard.from}
+        )
+
+    </insert>
+
+    <select id="selectDashboardAll" resultType="org.jozif.entity.Dashboard">
+        SELECT
+        <include refid="Base_Column_Alias_List"/>
+        FROM `Dashboard`
+        WHERE is_del != 1;
+    </select>
+
+    <!--<delete id="deleteDashboardById" parameterType="org.jozif.entity.Dashboard">-->
+        <!--delete from `dashboard` where id=#{dashboard.id}-->
+    <!--</delete>-->
+
+    <update id="deleteDashboardById" parameterType="org.jozif.entity.Dashboard">
+        UPDATE `dashboard` SET
+        is_del = 1
+        WHERE id=#{dashboard.id};
+    </update>
+</mapper>

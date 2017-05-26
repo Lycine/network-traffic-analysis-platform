@@ -8,27 +8,33 @@ import lombok.Setter;
 import java.util.Date;
 
 /**
- * Created by hongyu on 2017/4/14.
+ * Created by hongyu on 2017/5/25.
  */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Clazz {
+public class DashboardDto {
     private int id;
-    private String name;
+    private String link;
+    private String title;
+    private String content;
     private String from;
     private Date addTime;
-    private Date updateTime;
+    private int isDel;
+    private String note;
 
     @Override
     public String toString() {
-        return "Clazz{" +
+        return "DashboardDto{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", link='" + link + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
                 ", from='" + from + '\'' +
                 ", addTime=" + addTime +
-                ", updateTime=" + updateTime +
+                ", isDel=" + isDel +
+                ", note='" + note + '\'' +
                 '}';
     }
 }
