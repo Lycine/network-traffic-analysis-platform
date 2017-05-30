@@ -25,8 +25,19 @@ public interface DashboardDao {
      */
     int dashboardAdd(Dashboard dashboard);
 
+    /**
+     * 查找所有dashboard
+     *
+     * @return
+     */
     List<Dashboard> selectDashboardAll();
 
+    /**
+     * 删除dashboard所有信息
+     * 根据dashboard ID删除dashboard
+     *
+     * @param dashboard
+     * @return
+     */
     int deleteDashboardById(Dashboard dashboard);
-
 }

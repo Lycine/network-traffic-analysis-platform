@@ -57,7 +57,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("用户已停用code:" + Global.SIGNIN_FAILURE_USERSTOP_CODE + ".id:" + user.getId());
         }
 
-
         //验证密码
         String hashPassword = user.getPassword();
         String salt = user.getSalt();

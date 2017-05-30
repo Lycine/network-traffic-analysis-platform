@@ -86,5 +86,4 @@ public interface UserDao {
      * @return
      */
     List<User> selectUserByClazzId(User user);
-
 }

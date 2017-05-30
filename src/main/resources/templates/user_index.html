@@ -44,9 +44,9 @@
             </button>
             <span th:if="${session.user.role=='ROLE_ADMIN'}"><a class="navbar-brand" href="#">网络流量分析平台 | 管理员端</a></span>
             <span th:if="${session.user.role=='ROLE_ELEMENTARY'}"><a class="navbar-brand"
-                                                                     href="#">网络流量分析平台 | 高级用户</a></span>
+                                                                     href="#">网络流量分析平台 | 初级用户</a></span>
             <span th:if="${session.user.role=='ROLE_ADVANCED'}"><a class="navbar-brand"
-                                                                   href="#">网络流量分析平台 | 初级用户</a></span>
+                                                                   href="#">网络流量分析平台 | 高级用户</a></span>
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -407,7 +407,7 @@
               </fieldset>
               <input class="btn btn-primary" type="submit" value="修改"/>
             </form>
-            <form hidden="true" th:action="@{/deletadminUpdateUsereUser}" method="post" id="DeleteUserForm">
+            <form hidden="true" th:action="@{/deletUser}" method="post" id="DeleteUserForm">
               <fieldset>
                 <div class="form-group">
                   <input class="form-control" placeholder="电子邮箱" name="email1" type="text"

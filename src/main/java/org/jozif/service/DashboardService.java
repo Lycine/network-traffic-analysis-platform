@@ -25,7 +25,19 @@ public interface DashboardService {
      */
     Dashboard dashboardFindById(Dashboard dashboard);
 
+    /**
+     * 查找所有dashboard
+     *
+     * @return
+     */
     List<Dashboard> dashboardFindAll();
 
+    /**
+     * 删除dashboard所有信息
+     * 根据dashboard ID删除dashboard
+     *
+     * @param dashboard
+     * @return
+     */
     Boolean dashboardDeleteById(Dashboard dashboard);
 }

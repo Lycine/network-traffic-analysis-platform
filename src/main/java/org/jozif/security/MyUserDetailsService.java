@@ -23,9 +23,6 @@ public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserDao userDao;
-
     /**
      * 重写的加载用户方法，可以通过手机号，邮箱
      *

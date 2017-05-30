@@ -1,11 +1,9 @@
 package org.jozif.controller;
 
-
-
+import lombok.extern.apachecommons.CommonsLog;
 import org.jozif.entity.User;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
-import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.security.access.annotation.Secured;

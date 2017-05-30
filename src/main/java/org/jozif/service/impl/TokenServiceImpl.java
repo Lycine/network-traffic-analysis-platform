@@ -22,14 +22,12 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Boolean isDuplicateToken(Token token) {
-        token = tokenDao.selectTokenByToken(token);
-        return null != token;
+        return null != tokenDao.selectTokenByToken(token);
     }
 
     @Override
     public Boolean tokenAdd(Token token) {
-        int effect_row = tokenDao.tokenAdd(token);
-        return effect_row > 0;
+        return tokenDao.tokenAdd(token)> 0;
     }
 
     @Override
@@ -44,15 +42,11 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Boolean tokenExpiredDelete() {
-        int effect_row = tokenDao.deleteTokenByExpireTime();
-        return effect_row > 0;
+        return tokenDao.deleteTokenByExpireTime()> 0;
     }
 
     @Override
     public Boolean tokenDeleteById(Token token) {
-        int effect_row = tokenDao.deleteTokenById(token);
-        return effect_row > 0;
+        return tokenDao.deleteTokenById(token) > 0;
     }
-
-
 }

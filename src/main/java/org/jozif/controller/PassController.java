@@ -1,23 +1,21 @@
 package org.jozif.controller;
 
 import lombok.extern.apachecommons.CommonsLog;
-import org.jozif.entity.ResetPasswordDto;
-import org.jozif.entity.Token;
 import org.jozif.entity.User;
+import org.jozif.entity.Token;
+import org.jozif.entity.ResetPasswordDto;
 import org.jozif.service.TokenService;
 import org.jozif.service.UserService;
-import org.jozif.util.Global;
-import org.jozif.util.RandomStringGenerator;
-import org.jozif.util.TimeStampHelper;
-import org.jozif.util.Validator;
-import org.jozif.util.encryptAndDecode.CryptoUtils;
 import org.jozif.util.mail.SendEmail;
+import org.jozif.util.Global;
+import org.jozif.util.Validator;
+import org.jozif.util.RandomStringGenerator;
+import org.jozif.util.encryptAndDecode.CryptoUtils;
+import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +43,7 @@ public class PassController {
     }
 
     @RequestMapping(value = Global.SIGNIN_SUCCESS_CONTROLLER)
-    public String loginSuccess(HttpSession session,Model model) {
+    public String loginSuccess(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (userService.userUpdateById(user)) {
             log.debug("登录信息保存成功");
@@ -68,17 +66,14 @@ public class PassController {
         if (signInFailureCode == Global.SIGNIN_FAILURE_USERSTOP_CODE) {
             return "redirect:" + Global.SIGNIN_PAGE_STOP;
         }
-
         //已逻辑删除
         if (signInFailureCode == Global.SIGNIN_FAILURE_USERDELETE_CODE) {
             return "redirect:" + Global.SIGNIN_PAGE_DELETE;
         }
-
         //未找到用户
         if (signInFailureCode == Global.SIGNIN_FAILURE_USERNOTFOUND_CODE) {
             return "redirect:" + Global.SIGNIN_PAGE_USERNOTFOUND;//显示成密码错误
         }
-
         //密码错误
         if (signInFailureCode == Global.SIGNIN_FAILURE_WRONGPASSWORD_CODE) {
             if (signInFailureIsStop(user, id)) {
@@ -87,12 +82,10 @@ public class PassController {
                 return "redirect:" + Global.SIGNIN_PAGE_NORMALFAILURE + newFailureCount;
             }
         }
-
         //未找到用户，或未知错误
         if (id == 0 || signInFailureCode == Global.SIGNIN_FAILURE_UNKNOWN_CODE) {
             return "redirect:" + Global.SIGNIN_PAGE_ABNORMALFAILURE;
         }
-
         //未知错误
         return "redirect:" + Global.SIGNIN_PAGE_ABNORMALFAILURE;
     }
@@ -134,7 +127,6 @@ public class PassController {
                 //sendemail
                 Token token = new Token();
                 token.setToken(RandomStringGenerator.getRandomString(50));
-                Double timeStamp = TimeStampHelper.getTimeStamp();
                 Date dt = new Date();
                 long nowSec = dt.getTime() / 1000;
                 Date expireTime = new Date((nowSec + 3600) * 1000);
@@ -177,7 +169,7 @@ public class PassController {
      * @return
      */
     @RequestMapping(value = Global.FORGET_PASSWORD_RESET_PASSWORD_BY_LINK_CONTROLLER, method = RequestMethod.POST)
-    public String resetPasswordByLink(ResetPasswordDto resetPasswordDto, HttpServletRequest request) {
+    public String resetPasswordByLink(ResetPasswordDto resetPasswordDto) {
         Token token = new Token();
         User user = new User();
         try {
@@ -195,7 +187,6 @@ public class PassController {
             }
             log.debug(resetPasswordDto.toString());
             user = userService.userFindById(user);
-            String email = user.getEmail().trim();
             if (!userService.isDuplicateEmail(user)) {
                 log.debug("未注册过的邮箱(没有用户)");
                 return "redirect:" + Global.FORGET_PASSWORD_PAGE_USERNOTFOUND + "&token=0&uid=0";
@@ -313,5 +304,4 @@ public class PassController {
         userService.userUpdateById(user);
         return false;
     }
-
 }

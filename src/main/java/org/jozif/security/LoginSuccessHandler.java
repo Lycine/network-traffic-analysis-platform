@@ -20,10 +20,6 @@ import java.util.Date;
  */
 @CommonsLog
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
-
-    @Autowired
-    UserService userService;
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
         User user = (User) authentication.getPrincipal();

@@ -12,15 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configurable
 @EnableGlobalMethodSecurity(prePostEnabled = true)//允许进入页面方法前检验
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private MyAuthenticationProvider provider;//自定义验证
-
 
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

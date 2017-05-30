@@ -24,8 +24,7 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public Boolean dashboardAdd(Dashboard dashboard) {
-        int effect_row = dashboardDao.dashboardAdd(dashboard);
-        return effect_row > 0;
+        return dashboardDao.dashboardAdd(dashboard) > 0;
     }
 
     @Override
@@ -40,7 +39,6 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public Boolean dashboardDeleteById(Dashboard dashboard){
-        int effect_row = dashboardDao.deleteDashboardById(dashboard);
-        return effect_row > 0;
+        return dashboardDao.deleteDashboardById(dashboard) > 0;
     }
 }

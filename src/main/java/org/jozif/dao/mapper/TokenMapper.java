@@ -10,7 +10,6 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface TokenMapper extends TokenDao {
-
     /**
      * 查找token所有信息
      * 根据token ID查找该token所有信息

@@ -40,7 +40,6 @@
         #{dashboard.content},
         #{dashboard.from}
         )
-
     </insert>
 
     <select id="selectDashboardAll" resultType="org.jozif.entity.Dashboard">
@@ -49,10 +48,6 @@
         FROM `dashboard`
         WHERE is_del != 1;
     </select>
-
-    <!--<delete id="deleteDashboardById" parameterType="org.jozif.entity.Dashboard">-->
-        <!--delete from `dashboard` where id=#{dashboard.id}-->
-    <!--</delete>-->
 
     <update id="deleteDashboardById" parameterType="org.jozif.entity.Dashboard">
         UPDATE `dashboard` SET

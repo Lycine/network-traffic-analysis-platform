@@ -37,7 +37,6 @@
         delete from `token` where expire_time &lt; CURRENT_TIMESTAMP()
     </delete>
 
-
     <insert id="tokenAdd" parameterType="org.jozif.entity.Token">
         INSERT INTO token (
         token,
@@ -52,7 +51,5 @@
         #{token.addTime},
         #{token.expireTime}
         )
-
     </insert>
-
 </mapper>

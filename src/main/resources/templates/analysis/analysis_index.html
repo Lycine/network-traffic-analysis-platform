@@ -35,7 +35,8 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -50,11 +51,11 @@
               <li><a href="/emergency-response-center-home">突发事件中心 <span class="sr-only">(current)</span></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <!--有新消息，和用户名二选一。有新消息时显示有新消息，点击后进入消息中心。没有的话显示用户名，点击弹出模态框修改-->
-              <!--<li><a href="#"><i class="fa fa-commenting" aria-hidden="true"></i> 有新消息</a></li>-->
-              <li><a href="#" data-toggle="modal" data-target="#user-update-modal"><span
-                      class="glyphicon glyphicon-user" aria-hidden="true"></span> <span th:text="${session.user.nickName}"> 测试学生</span></a></li>
-              <li><a href="/pass/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> 注销</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#updateBasic-modal"><span
+                      class="glyphicon glyphicon-user" aria-hidden="true"></span> <span
+                      th:text="${session.user.nickName}"> 测试用户</span></a></li>
+              <li><a href="/pass/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> 注销</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -146,6 +147,7 @@
     </div>
   </div>
 </div>
+
 <!--modals-->
 <div th:each="dashboard,dashboardStat : ${dashboards}">
   <div class="modal fade" th:id="stu+(${dashboard.id})" tabindex="-1" role="dialog" aria-hidden="true">
@@ -204,8 +206,8 @@
   </div>
 </div>
 
-<!--user-update-modal 模态框（Modal） -->
-<div class="modal fade" id="user-update-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- 修改个人信息 模态框（Modal） -->
+<div class="modal fade" id="updateBasic-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -223,19 +225,22 @@
             <li role="presentation" class="updatePass"><a href="#" onclick="showPasswordForm()">更新密码</a></li>
           </ul>
           <br/>
-          <form th:action="@{/admin/updateBasic}" method="post" id="studentUpdateBasicForm">
+          <form th:action="@{/updateBasic}" method="post" id="studentUpdateBasicForm">
             <fieldset>
               <div hidden="true" class="form-group">
                 <input class="form-control" name="id" th:value="${session.user.id}" value="" type="text"/>
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="电子邮箱" name="email" type="text" value="" th:value="${session.user.email}"/>
+                <input class="form-control" placeholder="电子邮箱" name="email" type="text" value=""
+                       th:value="${session.user.email}"/>
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="姓名" name="nickName" type="text" value="" th:value="${session.user.nickName}"/>
+                <input class="form-control" placeholder="姓名" name="nickName" type="text" value=""
+                       th:value="${session.user.nickName}"/>
               </div>
               <div class="form-group">
-                <input class="form-control" placeholder="手机号" name="phoneNumber" type="text" value="" th:value="${session.user.phoneNumber}"/>
+                <input class="form-control" placeholder="手机号" name="phoneNumber" type="text" value=""
+                       th:value="${session.user.phoneNumber}"/>
               </div>
 
               <div class="form-group">
@@ -243,7 +248,7 @@
               </div>
             </fieldset>
           </form>
-          <form hidden="true" th:action="@{/admin/updatePassword}" method="post" id="studentUpdatePasswordForm">
+          <form hidden="true" th:action="@{/updatePassword}" method="post" id="studentUpdatePasswordForm">
             <fieldset>
               <div hidden="true" class="form-group">
                 <input class="form-control" name="id" th:value="${session.user.id}" value="" type="text"/>
@@ -252,10 +257,12 @@
                 <input class="form-control" name="hiddenEmail" th:value="${session.user.email}" value="" type="text"/>
               </div>
               <div hidden="true" class="form-group">
-                <input class="form-control" name="hiddenPhoneNumber" th:value="${session.user.phoneNumber}" value="" type="text"/>
+                <input class="form-control" name="hiddenPhoneNumber" th:value="${session.user.phoneNumber}" value=""
+                       type="text"/>
               </div>
               <div hidden="true" class="form-group">
-                <input class="form-control" name="hiddenNickName" th:value="${session.user.nickName}" value="" type="text"/>
+                <input class="form-control" name="hiddenNickName" th:value="${session.user.nickName}" value=""
+                       type="text"/>
               </div>
               <div class="form-group">
                 <input class="form-control" placeholder="旧密码" name="oldPassword" type="password" value=""/>

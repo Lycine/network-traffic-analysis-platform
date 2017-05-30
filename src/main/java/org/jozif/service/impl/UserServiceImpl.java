@@ -26,27 +26,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean userUpdateById(User user) {
-        int effect_row = userDao.updateUserById(user);
-        log.debug("修改行数：" + effect_row);
-        return effect_row > 0;
+        return userDao.updateUserById(user) > 0;
     }
 
     @Override
     public User userFindById(User user) {
-        user = userDao.selectUserById(user);
-        return user;
+        return userDao.selectUserById(user);
     }
 
     @Override
     public User userFindByEmail(User user) {
-        user = userDao.selectUserByEmail(user);
-        return user;
+        return userDao.selectUserByEmail(user);
     }
 
     @Override
     public Boolean isDuplicateEmail(User user) {
-        user = userDao.selectUserByEmail(user);
-        return null != user;
+        return null != userDao.selectUserByEmail(user);
     }
 
     @Override
@@ -57,14 +52,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isDuplicateNickName(User user) {
-        user = userDao.selectUserByNickName(user);
-        return null != user;
+        return null != userDao.selectUserByNickName(user);
     }
 
     @Override
     public Boolean userAdd(User user) {
-        int effect_row = userDao.addUser(user);
-        return effect_row > 0;
+        return  userDao.addUser(user) > 0;
     }
 
 
