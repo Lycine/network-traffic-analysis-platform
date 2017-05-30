@@ -104,8 +104,8 @@
           <tbody>
           <tr th:each="dashboard,dashboardStat : ${dashboards}">
             <!--th:href="@{/analysis/detail/{id}(id=${dashboard.id})}"-->
-            <td><a th:onclick="'javascript:dashboardDetail('+${dashboard.id}+');'"><span th:text="${dashboard.id}"></span></a></td>
-            <td th:text="${dashboard.title}"></td>
+            <td th:text="${dashboard.id}"></td>
+            <td><a th:onclick="'javascript:dashboardDetail('+${dashboard.id}+');'"><span th:text="${dashboard.title}"></span></a></td>
             <td th:text="${dashboard.from}"></td>
 
             <td sec:authorize="hasRole('ROLE_ADMIN')">

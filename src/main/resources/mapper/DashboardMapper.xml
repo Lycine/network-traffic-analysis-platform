@@ -25,11 +25,11 @@
     <select id="selectDashboardById" parameterType="org.jozif.entity.Dashboard" resultType="org.jozif.entity.Dashboard">
         SELECT
         <include refid="Base_Column_Alias_List"/>
-        FROM `Dashboard` WHERE id = #{dashboard.id};
+        FROM `dashboard` WHERE id = #{dashboard.id};
     </select>
 
     <insert id="dashboardAdd" parameterType="org.jozif.entity.Dashboard">
-        INSERT INTO Dashboard (
+        INSERT INTO dashboard (
         link,
         title,
         content,
@@ -46,7 +46,7 @@
     <select id="selectDashboardAll" resultType="org.jozif.entity.Dashboard">
         SELECT
         <include refid="Base_Column_Alias_List"/>
-        FROM `Dashboard`
+        FROM `dashboard`
         WHERE is_del != 1;
     </select>
 

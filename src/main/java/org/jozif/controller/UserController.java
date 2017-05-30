@@ -41,8 +41,6 @@ public class UserController {
         return "emergency-response-center-home";
     }
 
-
-
     //step one
     @RequestMapping(value = "/admin/getInfoByEmail")
     public String getInfoByEmail(String email, Model model, HttpSession session, HttpServletRequest request) {

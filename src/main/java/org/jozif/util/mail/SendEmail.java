@@ -40,7 +40,7 @@ public class SendEmail {
 //          设置发送时间
             message.setSentDate(EmailBody.sendDate);
 //          设置发信人地址和名字
-            Address address = new InternetAddress(EmailHeader.FROM, "ITTAC");
+            Address address = new InternetAddress(EmailHeader.FROM, "网络流量分析平台");
 //          把发件人信息添加到信息中
             message.setFrom(address);
 //          设置发件人地址
@@ -94,7 +94,7 @@ public class SendEmail {
 //          设置发送时间
             message.setSentDate(EmailBody.sendDate);
 //          设置发信人地址和名字
-            Address address = new InternetAddress(EmailHeader.FROM, "ITTAC");
+            Address address = new InternetAddress(EmailHeader.FROM, "网络流量分析平台");
 //          把发件人信息添加到信息中
             message.setFrom(address);
 //          设置发件人地址

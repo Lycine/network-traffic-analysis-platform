@@ -140,7 +140,10 @@
             <button type="button" class="btn-block btn btn-primary" data-toggle="modal" data-target="#user-register-modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加新用户</button>
           </span>
           <span class="col-xs-3">
-            <button type="button" class="btn-block btn btn-primary" data-toggle="modal" data-target="#admin-update-step-one-user-modal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 修改用户信息</button>
+            <button type="button" class="btn-block btn btn-primary" data-toggle="modal" data-target="#admin-update-step-one-user-modal"><span class="glyphicon glyphicon-wrench " aria-hidden="true"></span> 修改用户信息</button>
+          </span>
+          <span class="col-xs-3">
+            <button type="button" class="btn-block btn btn-primary" data-toggle="modal" data-target="#admin-update-step-one-user-modal"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> 删除用户</button>
           </span>
         </div>
       </div>
@@ -280,9 +283,9 @@
               </div>
               <div class="form-group">
                 <select class="form-control" name="role">
-                  <option value="ROLE_ADMIN">初级用户</option>
-                  <option value="ROLE_ELEMENTARY">高级用户</option>
-                  <option value="ROLE_ADVANCED">管理员</option>
+                  <option value="ROLE_ELEMENTARY">初级用户</option>
+                  <option value="ROLE_ADVANCED">高级用户</option>
+                  <option value="ROLE_ADMIN">管理员</option>
                 </select>
               </div>
             </fieldset>
@@ -381,7 +384,7 @@
                   </select>
                 </div>
               </fieldset>
-              <input class="btn btn-primary" type="submit" value="添加"/>
+              <input class="btn btn-primary" type="submit" value="修改"/>
             </form>
           </div>
         </div>

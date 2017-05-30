@@ -68,9 +68,9 @@ public class AnalysisController {
     public String add(Dashboard dashboard, Model model, HttpSession session, HttpServletRequest request) {
         dashboard.toString();
         if(null == dashboard.getLink() || "".equals(dashboard.getLink())){
-            Msg msg = new Msg("failure", "删除仪表盘失败，链接为空");
+            Msg msg = new Msg("failure", "添加仪表盘失败，链接为空");
             model.addAttribute("msg", msg);
-            log.debug("删除仪表盘失败，链接为空");
+            log.debug("添加仪表盘失败，链接为空");
             List<Dashboard> dashboardList = dashboardService.dashboardFindAll();
             List<DashboardDto> dashboardDtoList = new ArrayList<>();
             log.info("dashboardList: ");
@@ -85,9 +85,9 @@ public class AnalysisController {
             model.addAttribute("dashboards", dashboardDtoList);
             return "analysis/analysis_index";
         } else if(null == dashboard.getTitle() || "".equals(dashboard.getTitle())){
-            Msg msg = new Msg("failure", "删除仪表盘失败，标题为空");
+            Msg msg = new Msg("failure", "添加仪表盘失败，标题为空");
             model.addAttribute("msg", msg);
-            log.debug("删除仪表盘失败，标题为空");
+            log.debug("添加仪表盘失败，标题为空");
             List<Dashboard> dashboardList = dashboardService.dashboardFindAll();
             List<DashboardDto> dashboardDtoList = new ArrayList<>();
             log.info("dashboardList: ");
@@ -102,9 +102,9 @@ public class AnalysisController {
             model.addAttribute("dashboards", dashboardDtoList);
             return "analysis/analysis_index";
         } else if(null == dashboard.getContent() || "".equals(dashboard.getContent())){
-            Msg msg = new Msg("failure", "删除仪表盘失败，内容为空");
+            Msg msg = new Msg("failure", "添加仪表盘失败，内容为空");
             model.addAttribute("msg", msg);
-            log.debug("删除仪表盘失败，内容为空");
+            log.debug("添加仪表盘失败，内容为空");
             List<Dashboard> dashboardList = dashboardService.dashboardFindAll();
             List<DashboardDto> dashboardDtoList = new ArrayList<>();
             log.info("dashboardList: ");
@@ -119,9 +119,9 @@ public class AnalysisController {
             model.addAttribute("dashboards", dashboardDtoList);
             return "analysis/analysis_index";
         } else if(0 == dashboard.getFrom()){
-            Msg msg = new Msg("failure", "删除仪表盘失败，来源为空");
+            Msg msg = new Msg("failure", "添加仪表盘失败，来源为空");
             model.addAttribute("msg", msg);
-            log.debug("删除仪表盘失败，来源为空");
+            log.debug("添加仪表盘失败，来源为空");
             List<Dashboard> dashboardList = dashboardService.dashboardFindAll();
             List<DashboardDto> dashboardDtoList = new ArrayList<>();
             log.info("dashboardList: ");
@@ -138,9 +138,9 @@ public class AnalysisController {
         }
 
         if(dashboardService.dashboardAdd(dashboard)){
-            Msg msg = new Msg("success", "删除仪表盘成功");
+            Msg msg = new Msg("success", "添加仪表盘成功");
             model.addAttribute("msg", msg);
-            log.debug("删除仪表盘成功");
+            log.debug("添加仪表盘成功");
             List<Dashboard> dashboardList = dashboardService.dashboardFindAll();
             List<DashboardDto> dashboardDtoList = new ArrayList<>();
             log.info("dashboardList: ");
@@ -155,9 +155,9 @@ public class AnalysisController {
             model.addAttribute("dashboards", dashboardDtoList);
             return "analysis/analysis_index";
         } else {
-            Msg msg = new Msg("failure", "删除仪表盘失败，未知错误");
+            Msg msg = new Msg("failure", "添加仪表盘失败，未知错误");
             model.addAttribute("msg", msg);
-            log.debug("删除仪表盘失败，未知错误");
+            log.debug("添加仪表盘失败，未知错误");
             List<Dashboard> dashboardList = dashboardService.dashboardFindAll();
             List<DashboardDto> dashboardDtoList = new ArrayList<>();
             log.info("dashboardList: ");
