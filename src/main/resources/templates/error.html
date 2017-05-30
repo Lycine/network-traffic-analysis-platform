@@ -1,14 +1,42 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
-    <title><span th:text="${#httpServletRequest.getAttribute('javax.servlet.error.status_code')}" th:remove="tag"></span></title>
-    <meta charset="utf-8"/>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <title>Bootstrap 101 Template</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-    <h3>
-        Message : <span th:text="${#httpServletRequest.getAttribute('javax.servlet.error.message')}"></span>
-        Code : <span th:text="${#httpServletRequest.getAttribute('javax.servlet.error.status_code')}"></span>
-    </h3>
-<a href="/" th:href="@{/}">Back to Home Page</a>
+<h1 style="text-align: center" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.status_code')}">404</h1>
+<p style="text-align: center">Oops~ There are some problems with your visit to the page</p>
+<p style="text-align: center"><a href="/" th:href="@{/}">Back to Home Page</a></p>
+<div hidden="true">
+  <br/>
+  <p style="text-align: center">
+    Message : <span th:text="${#httpServletRequest.getAttribute('javax.servlet.error.message')}"></span>
+  </p>
+  <p style="text-align: center">
+    Code : <span th:text="${#httpServletRequest.getAttribute('javax.servlet.error.status_code')}"></span>
+  </p>
+</div>
+<hr/>
+<p style="text-align: center">
+  Network traffic analysis platform 0.0.1
+</p>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
 </body>
 </html>

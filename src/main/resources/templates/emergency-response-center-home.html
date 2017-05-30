@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <meta name="_csrf" th:content="${_csrf.token}" content=""/>
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" content=""/>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-  <title>网络流量分析平台 | 突发事件中心</title>
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="0.0.1"/>
+  <meta name="author" content="hongyu"/>
+  <link rel="icon" href="/favicon.ico"/>
+  <title>网络流量分析平台</title>
   <!-- Bootstrap -->
   <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="//cdn.bootcss.com/respoadmin/nd.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <link rel="stylesheet" media="screen" href="../css/ntap.css"/>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -54,6 +62,28 @@
     </div>
   </div>
   <!--nav end-->
+
+  <!--msg start-->
+  <div class="row">
+    <div class="col-xs-12">
+      <div th:if="${msg}">
+        <div class="alert alert-danger alert-dismissible" role="alert" th:if="${msg.status eq 'failure'}">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <span th:text="${msg.content}">测试输出，返回失败消息</span>
+        </div>
+        <div class="alert alert-success alert-dismissible" role="alert" th:if="${msg.status eq 'success'}">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <span th:text="${msg.content}">测试输出，返回成功消息</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--msg end-->
+
   <div class="row" style="margin-top: 3%">
     <div class="col-md-8 col-md-offset-2">
       <form>
@@ -71,6 +101,7 @@
       </form>
     </div>
   </div>
+
   <div class="row" style="margin-top: 3%">
     <div class="col-md-8 col-md-offset-2">
       <div id="solution">
@@ -165,10 +196,9 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
         </button>
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal -->
+    </div>
+  </div>
 </div>
-
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>

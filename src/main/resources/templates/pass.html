@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta name="_csrf" th:content="${_csrf.token}" content=""/>
+  <!-- default header name is X-CSRF-TOKEN -->
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" content=""/>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -13,17 +16,14 @@
   <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
-
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <script src="//cdn.bootcss.com/respoadmin/nd.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <link rel="stylesheet" media="screen" href="/css/ittac-homework.css"/>
+  <link rel="stylesheet" media="screen" href="../css/ntap.css"/>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
-  <link href="//cdn.bootcss.com/fullcalendar/3.3.1/fullcalendar.min.css" rel="stylesheet"/>
-  <link href="/css/fullcalendar.print.min.css" rel="stylesheet" media="print"/>
 </head>
 <body>
 <div class="container">
@@ -47,8 +47,6 @@
     </div>
   </div>
   <!--nav end-->
-
-  <!--<div th:if="${param.register==null and param.forgetPassword==null and param.signIn==null}">-->
   <div th:if="${param.forgetPassword==null and param.signIn==null}">
     <script>
       /*<![CDATA[*/
@@ -138,9 +136,6 @@
                 <div class="form-group">
                   <input class="btn btn-lg btn-primary d btn-block" type="submit" value="登录"/>
                 </div>
-                <!--<div class="form-group">-->
-                <!--没有账户？<a href="/pass?register">立即注册</a>-->
-                <!--</div>-->
                 <div class="form-group">
                   <a href="/pass?forgetPassword">忘记密码？</a>
                 </div>
@@ -151,74 +146,6 @@
       </div>
     </div>
   </div>
-
-  <!--<div class="container" th:if="${param.register}">-->
-  <!--<div class="row vertical-offset-100">-->
-  <!--<div class="col-md-4 col-md-offset-4">-->
-  <!--<div class="panel panel-default"-->
-  <!--style="border: 1px solid rgba(1, 2, 2, 0.1);border-radius: 4px;box-shadow: 0 15px 25px rgba(1, 2, 2, 0.1);padding: 20px 20px;">-->
-  <!--<div class="" style="padding: 10px 15px;">-->
-  <!--<h3 class="panel-title">注册</h3>-->
-  <!--</div>-->
-  <!--<div class="panel-body">-->
-  <!--<form th:action="@{/pass/register}" method="post" id="registerForm">-->
-  <!--<fieldset>-->
-  <!--<div class="form-group">-->
-  <!--<input class="form-control" placeholder="电子邮箱" name="email" type="text"/>-->
-  <!--</div>-->
-  <!--<div class="form-group">-->
-  <!--<input class="form-control" placeholder="密码" name="password" type="password" value=""/>-->
-  <!--</div>-->
-  <!--<div class="form-group">-->
-  <!--<input class="form-control" placeholder="重复密码" name="passwordCheck" type="password" value=""/>-->
-  <!--</div>-->
-  <!--<div class="alert alert-danger alert-dismissible" role="alert" th:if="${param.unknownError}">-->
-  <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-  <!--<span aria-hidden="true">&times;</span>-->
-  <!--</button>-->
-  <!--<span>注册失败，未知错误。</span>-->
-  <!--</div>-->
-  <!--<div class="alert alert-danger alert-dismissible" role="alert" th:if="${param.duplicatedEmail}">-->
-  <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-  <!--<span aria-hidden="true">&times;</span>-->
-  <!--</button>-->
-  <!--<span>该邮箱已经注册，<a href="/pass?signIn">立即登录</a></span>-->
-  <!--</div>-->
-  <!--<div class="alert alert-danger alert-dismissible" role="alert" th:if="${param.wrongFormat}">-->
-  <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-  <!--<span aria-hidden="true">&times;</span>-->
-  <!--</button>-->
-  <!--<span>邮箱或密码格式有误。</span>-->
-  <!--</div>-->
-  <!--<div class="alert alert-danger alert-dismissible" role="alert" th:if="${param.sendFailure}">-->
-  <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-  <!--<span aria-hidden="true">&times;</span>-->
-  <!--</button>-->
-  <!--<span>激活账户邮件发送失败，请联系管理员</span>-->
-  <!--</div>-->
-  <!--<div class="alert alert-success alert-dismissible" role="alert" th:if="${param.success}">-->
-  <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
-  <!--<span aria-hidden="true">&times;</span>-->
-  <!--</button>-->
-  <!--<span>注册成功，请查看邮箱并激活。</span>-->
-  <!--</div>-->
-  <!--<div class="form-group">-->
-  <!--<input class="btn btn-lg btn-primary d btn-block" type="submit" value="注册"/>-->
-  <!--</div>-->
-  <!--<div class="form-group">-->
-  <!--已有账户? <a href="/pass?signIn">立即登录</a>-->
-  <!--</div>-->
-  <!--<div class="form-group">-->
-  <!--<a href="/pass?forgetPassword">忘记密码？</a>-->
-  <!--</div>-->
-  <!--</fieldset>-->
-  <!--</form>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  　　
   <div class="container" th:if="${param.forgetPassword!=null and param.token==null and param.uid==null}">
     <div class="row vertical-offset-100">
       <div class="col-md-4 col-md-offset-4">
@@ -248,7 +175,6 @@
                   </button>
                   <span>
                   申请重置密码失败，该邮箱未注册。
-                    <!--<a href="/pass?register">立即注册</a>-->
                 </span>
                 </div>
                 <div class="alert alert-danger alert-dismissible" role="alert" th:if="${param.wrongFormat}">
@@ -275,9 +201,6 @@
                   </button>
                   <span>重置密码邮件发送失败，请联系管理员</span>
                 </div>
-                <!--<div class="form-group">-->
-                <!--没有账户？<a href="/pass?register">立即注册</a>-->
-                <!--</div>-->
                 <div class="form-group">
                   已有账户？<a href="/pass?signIn">立即登录</a>
                 </div>
@@ -323,7 +246,6 @@
                   </button>
                   <span>
                   重置密码失败，该邮箱未注册。
-                    <!--<a href="/pass?register">立即注册</a>-->
                 </span>
                 </div>
                 <div class="alert alert-danger alert-dismissible" role="alert" th:if="${param.wrongFormat}">
@@ -364,7 +286,7 @@
 <script src="/webjars/jquery/2.1.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/webjars/bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-<script src="/js/myBasic.js"></script>
-<script src="/js/pass.js"></script>
+<script src="../js/ntap.js"></script>
+<script src="../js/pass.js"></script>
 </body>
 </html>

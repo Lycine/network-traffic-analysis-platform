@@ -28,6 +28,7 @@ public class SendEmail {
 //      添加必要的信息
         prop.put("mail.smtp.host", EmailHeader.Email_Host);
         prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.port", "587");
 //      设置对话和邮件服务器进行通讯
         Session session = Session.getDefaultInstance(prop, auth);
 //      设置邮件对象
@@ -82,6 +83,7 @@ public class SendEmail {
 //      添加必要的信息
         prop.put("mail.smtp.host", EmailHeader.Email_Host);
         prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.port", "587");
 //      设置对话和邮件服务器进行通讯
         Session session = Session.getDefaultInstance(prop, auth);
 //      设置邮件对象
