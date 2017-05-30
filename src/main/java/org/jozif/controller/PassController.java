@@ -54,16 +54,10 @@ public class PassController {
         }
         user = userService.userFindById(user);
         session.setAttribute("user", user);
-        switch (user.getRole()) {
-            case "ROLE_ELEMENTARY":
-                log.debug(user.toString());
-                return "elementary_index";
-            case "ROLE_ADVANCED":
-                return "advanced_index";
-            case "ROLE_ADMIN":
-                return "admin_index";
-            default:
-                return "pass?signIn&normalFailure";
+        if (null != user.getRole() || "".equals(user.getRole()))
+            return "user_index";
+        else {
+            return "pass?signIn&normalFailure";
         }
     }
 

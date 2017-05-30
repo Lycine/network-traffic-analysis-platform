@@ -33,55 +33,55 @@ public class UserController {
     @Autowired
     private TokenService tokenService;
 
-    @Secured("")
-    @RequestMapping(value = "/emergency-response-center-home")
-    public String home(User user, Model model, HttpSession session, HttpServletRequest request) {
-        user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
-        return "emergency-response-center-home";
-    }
-
-    //step one
-    @RequestMapping(value = "/admin/getInfoByEmail")
-    public String getInfoByEmail(String email, Model model, HttpSession session, HttpServletRequest request) {
+    /**admin/
+     * 修改其他用户第一步，输入邮件返回用户信息
+     * 管理员权限
+     */
+    @Secured({"ROLE_ADMIN"})
+    @RequestMapping(value = "/updateOtherUserStepOne")
+    public String updateOtherUserStepOne(String email, Model model, HttpSession session, HttpServletRequest request) {
         log.debug("email: " + email);
         System.out.println("email: " + email);
         if (null == email || "".equals(email) || !Validator.isEmail(email)){
-            Msg msg = new Msg("failure", "修改用户步骤1失败，邮箱格式问题。");
+            Msg msg = new Msg("failure", "修改/删除用户步骤一失败，邮箱格式问题。");
             model.addAttribute("msg", msg);
-            log.debug("修改用户步骤1失败，邮箱格式问题。");
-            return "admin_index";
+            log.debug("修改/删除用户步骤一失败，邮箱格式问题。");
+            return "user_index";
         }
         User user = new User();
         user.setEmail(email);
         user = userService.userFindByEmail(user);
         if (null == user) {
-            Msg msg = new Msg("failure", "修改用户步骤1失败，未找到对应的邮箱。");
+            Msg msg = new Msg("failure", "修改/删除用户步骤一失败，未找到对应的邮箱。");
             model.addAttribute("msg", msg);
-            log.debug("修改用户步骤1失败，未找到对应的邮箱。");
-            return "admin_index";
+            log.debug("修改/删除用户步骤一失败，未找到对应的邮箱。");
+            return "user_index";
         }
         model.addAttribute("targetUser", user);
         System.out.println("targetUser: " + user.toString());
         user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
-        return "admin_index";
+        return "user_index";
     }
 
-    @RequestMapping(value = "/admin/updateUser", method = RequestMethod.POST)
+    /**
+     * 修改其他用户第二步，更新用户信息
+     * 管理员权限
+     */
+    @Secured({"ROLE_ADMIN"})
+    @RequestMapping(value = "/updateOtherUserStepTwo", method = RequestMethod.POST)
     public String adminUpdateUser(String email,String role,String isStop,User user, Model model, HttpSession session, HttpServletRequest request, HttpResponse response) {
-        Date date = new Date();
         log.info(user.toString());
         if (null == user.getEmail() || "".equals(user.getEmail())) {
             Msg msg = new Msg("failure", "更新基本信息失败，邮箱为空。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，邮箱为空。");
-            return "admin_index";
+            return "user_index";
         } else if (null == user.getRole() || "".equals(user.getRole())) {
             Msg msg = new Msg("failure", "更新基本信息失败，角色为空。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，角色为空。");
-            return "admin_index";
+            return "user_index";
         }
         User newUser = userService.userFindByEmail(user);
         System.out.println("newUser: " + newUser);
@@ -93,18 +93,54 @@ public class UserController {
             Msg msg = new Msg("failure", "更新基本信息失败，未知错误。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，未知错误。");
-            return "admin_index";
+            return "user_index";
         } else {
             Msg msg = new Msg("success", "更新用户信息成功。");
             model.addAttribute("msg", msg);
-            session.setAttribute("user", userService.userFindById(user));
             log.debug("更新用户信息成功。");
-            return "admin_index";
+            return "user_index";
         }
     }
 
-    @RequestMapping(value = "/admin/registerUser", method = RequestMethod.POST)
-    public String registerNewStudent(HttpSession session,User user, Model model) {
+    /**
+     * 逻辑删除用户
+     * 管理员权限
+     */
+    @Secured({"ROLE_ADMIN"})
+    @RequestMapping(value = "/deletadminUpdateUsereUser", method = RequestMethod.POST)
+    public String deleteUser(String email,String role,String isStop,User user, Model model, HttpSession session, HttpServletRequest request, HttpResponse response) {
+        log.info(user.toString());
+        if (null == user.getEmail() || "".equals(user.getEmail())) {
+            Msg msg = new Msg("failure", "删除用户失败，邮箱为空。");
+            model.addAttribute("msg", msg);
+            log.debug("删除用户失败，邮箱为空。");
+            return "user_index";
+        }
+        User newUser = userService.userFindByEmail(user);
+        System.out.println("newUser: " + newUser);
+        newUser.setIsDel(1);
+        System.out.println("new newUser: " + newUser);
+        user = newUser;
+        if (!userService.userUpdateById(user)) {
+            Msg msg = new Msg("failure", "删除用户失败，未知错误。");
+            model.addAttribute("msg", msg);
+            log.debug("删除用户失败，未知错误。");
+            return "user_index";
+        } else {
+            Msg msg = new Msg("success", "删除用户成功。");
+            model.addAttribute("msg", msg);
+            log.debug("删除用户成功。");
+            return "user_index";
+        }
+    }
+
+    /**
+     * 邀请用户
+     * 管理员权限，高级用户权限
+     */
+    @Secured({"ROLE_ADMIN","ROLE_ADVANCED"})
+    @RequestMapping(value = "/inviteUser", method = RequestMethod.POST)
+    public String inviteUser(HttpSession session,User user, Model model) {
         log.debug(user.toString());
         User sessionUser = (User) session.getAttribute("user");
         try {
@@ -113,9 +149,9 @@ public class UserController {
                 Msg msg = new Msg("failure", "新建用户失败，邮箱为空。");
                 model.addAttribute("msg", msg);
                 if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
-                    return "advanced_index";
+                    return "user_index";
                 } else {
-                    return "admin_index";
+                    return "user_index";
                 }
             }
             String email = user.getEmail().trim();
@@ -124,9 +160,9 @@ public class UserController {
                 Msg msg = new Msg("failure", "新建用户失败，邮箱格式不正确。");
                 model.addAttribute("msg", msg);
                 if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
-                    return "advanced_index";
+                    return "user_index";
                 } else {
-                    return "admin_index";
+                    return "user_index";
                 }
             }
             if (userService.isDuplicateEmail(user)) {
@@ -134,24 +170,23 @@ public class UserController {
                 Msg msg = new Msg("failure", "新建用户失败，已注册过的邮箱。");
                 model.addAttribute("msg", msg);
                 if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
-                    return "advanced_index";
+                    return "user_index";
                 } else {
-                    return "admin_index";
-                }
-            }
-
-            if (null == user.getRole() || "".equals(user.getRole().trim())) {
-                log.debug("角色为空");
-                Msg msg = new Msg("failure", "新建用户失败，角色为空。");
-                model.addAttribute("msg", msg);
-                if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
-                    return "advanced_index";
-                } else {
-                    return "admin_index";
+                    return "user_index";
                 }
             } else {
+                if (null == user.getRole() || "".equals(user.getRole().trim())) {
+                    log.debug("角色为空");
+                    Msg msg = new Msg("failure", "新建用户失败，角色为空。");
+                    model.addAttribute("msg", msg);
+                    if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
+                        user.setRole("ROLE_ELEMENTARY");
+
+                    } else {
+                        return "user_index";
+                    }
+                }
                 log.debug("新建用户");
-                user.setRole(user.getRole());
                 user.setNickName(user.getEmail());
                 user.setEmail(user.getEmail());
                 String salt = CryptoUtils.getSalt();//盐值
@@ -168,9 +203,9 @@ public class UserController {
                     Msg msg = new Msg("failure", "新建用户失败，未知错误。");
                     model.addAttribute("msg", msg);
                     if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
-                        return "advanced_index";
+                        return "user_index";
                     } else {
-                        return "admin_index";
+                        return "user_index";
                     }
                 }
                 Token token = new Token();
@@ -189,9 +224,9 @@ public class UserController {
                     Msg msg = new Msg("failure", "新建用户失败，未知错误。");
                     model.addAttribute("msg", msg);
                     if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
-                        return "advanced_index";
+                        return "user_index";
                     } else {
-                        return "admin_index";
+                        return "user_index";
                     }
                 } else {
                     tokenService.tokenAdd(token);
@@ -202,18 +237,18 @@ public class UserController {
                         Msg msg = new Msg("success", "新建用户成功，请让用户按照邮件激活账户。");
                         model.addAttribute("msg", msg);
                         if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
-                            return "advanced_index";
+                            return "user_index";
                         } else {
-                            return "admin_index";
+                            return "user_index";
                         }
                     } else {
                         log.debug("邮件发送失败");
                         Msg msg = new Msg("failure", "新建用户失败，未知错误。");
                         model.addAttribute("msg", msg);
                         if ("ROLE_ADVANCED".equals(sessionUser.getRole())){
-                            return "advanced_index";
+                            return "user_index";
                         } else {
-                            return "admin_index";
+                            return "user_index";
                         }
                     }
                 }
@@ -226,7 +261,12 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/admin/updateBasic", method = RequestMethod.POST)
+    /**
+     * 修改自己基本信息
+     * 所有权限
+     */
+    @Secured("")
+    @RequestMapping(value = "/updateBasic", method = RequestMethod.POST)
     public String adminUpdateBasic(User user, Model model, HttpSession session, HttpServletRequest request) {
         Date date = new Date();
         user.setUpdateTime(date);
@@ -236,136 +276,78 @@ public class UserController {
             Msg msg = new Msg("failure", "更新基本信息失败，邮箱为空。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，邮箱为空。");
-            return "admin_index";
+            return "user_index";
         } else if (null == user.getPhoneNumber() && "".equals(user.getPhoneNumber())) {
             Msg msg = new Msg("failure", "更新基本信息失败，手机号为空。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，手机号为空。");
-            return "admin_index";
+            return "user_index";
         } else if (null == user.getNickName() && "".equals(user.getNickName())) {
             Msg msg = new Msg("failure", "更新基本信息失败，昵称为空。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，昵称为空。");
-            return "admin_index";
+            return "user_index";
         } else if (!Validator.isEmail(user.getEmail())) {
             Msg msg = new Msg("failure", "更新基本信息失败，邮箱格式不正确。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，邮箱格式不正确。");
-            return "admin_index";
+            return "user_index";
         } else if (!Validator.isMobile(user.getPhoneNumber())) {
             Msg msg = new Msg("failure", "更新基本信息失败，手机号格式不正确。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，手机号格式不正确。");
-            return "admin_index";
+            return "user_index";
         } else if (userService.isDuplicatePhoneNumber(user) && !user.getPhoneNumber().equals(oldUser.getPhoneNumber())) {
             Msg msg = new Msg("failure", "更新基本信息失败，手机号已存在。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，手机号已存在。");
-            return "admin_index";
+            return "user_index";
         } else if (userService.isDuplicateEmail(user) && !user.getEmail().equals(oldUser.getEmail())) {
             Msg msg = new Msg("failure", "更新基本信息失败，邮箱已存在。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，邮箱已存在。");
-            return "admin_index";
+            return "user_index";
         } else if (userService.isDuplicateNickName(user) && !user.getNickName().equals(oldUser.getNickName())) {
             Msg msg = new Msg("failure", "更新基本信息失败，昵称已存在。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，昵称已存在。");
-            return "admin_index";
+            return "user_index";
         } else if (!userService.userUpdateById(user)) {
             Msg msg = new Msg("failure", "更新基本信息失败，未知错误。");
             model.addAttribute("msg", msg);
             log.debug("更新基本信息失败，未知错误。");
-            return "admin_index";
+            return "user_index";
         } else {
             Msg msg = new Msg("success", "更新基本信息成功。");
             model.addAttribute("msg", msg);
             session.setAttribute("user", userService.userFindById(user));
             log.debug("更新基本信息成功。");
-            return "admin_index";
+            return "user_index";
         }
     }
 
-
-    @RequestMapping(value = "/student/updateBasic", method = RequestMethod.POST)
-    public String studentUpdateBasic(User user, Model model, HttpSession session, HttpServletRequest request, HttpResponse response) {
-        Date date = new Date();
-        user.setUpdateTime(date);
-        User oldUser = userService.userFindById(user);
-        log.info(user.toString());
-        if (null == user.getEmail() && "".equals(user.getEmail())) {
-            Msg msg = new Msg("failure", "更新基本信息失败，邮箱为空。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，邮箱为空。");
-            return "stu/stu_index";
-        } else if (null == user.getPhoneNumber() && "".equals(user.getPhoneNumber())) {
-            Msg msg = new Msg("failure", "更新基本信息失败，手机号为空。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，手机号为空。");
-            return "stu/stu_index";
-        } else if (null == user.getNickName() && "".equals(user.getNickName())) {
-            Msg msg = new Msg("failure", "更新基本信息失败，姓名为空。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，姓名为空。");
-            return "stu/stu_index";
-        } else if (!Validator.isEmail(user.getEmail())) {
-            Msg msg = new Msg("failure", "更新基本信息失败，邮箱格式不正确。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，邮箱格式不正确。");
-            return "stu/stu_index";
-        } else if (!Validator.isMobile(user.getPhoneNumber())) {
-            Msg msg = new Msg("failure", "更新基本信息失败，手机号格式不正确。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，手机号格式不正确。");
-            return "stu/stu_index";
-        } else if (userService.isDuplicatePhoneNumber(user) && !user.getPhoneNumber().equals(oldUser.getPhoneNumber())) {
-            Msg msg = new Msg("failure", "更新基本信息失败，手机号已存在。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，手机号已存在。");
-            return "stu/stu_index";
-        } else if (userService.isDuplicateEmail(user) && !user.getEmail().equals(oldUser.getEmail())) {
-            Msg msg = new Msg("failure", "更新基本信息失败，邮箱已存在。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，邮箱已存在。");
-            return "stu/stu_index";
-        } else if (userService.isDuplicateNickName(user) && !user.getNickName().equals(oldUser.getNickName())) {
-            Msg msg = new Msg("failure", "更新基本信息失败，昵称已存在。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，昵称已存在。");
-            return "stu/stu_index";
-        } else if (!userService.userUpdateById(user)) {
-            Msg msg = new Msg("failure", "更新基本信息失败，未知错误。");
-            model.addAttribute("msg", msg);
-            log.debug("更新基本信息失败，未知错误。");
-            return "stu/stu_index";
-        } else {
-            Msg msg = new Msg("success", "更新基本信息成功。");
-            model.addAttribute("msg", msg);
-            session.setAttribute("user", userService.userFindById(user));
-            log.debug("更新基本信息成功。");
-            return "stu/stu_index";
-        }
-    }
-
-    @RequestMapping(value = "/admin/updatePassword", method = RequestMethod.POST)
+    /**
+     * 修改自己密码
+     * 所有权限
+     */
+    @Secured("")
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
     public String adminUpdatePassword(User user, Model model, HttpSession session, HttpServletRequest request) {
         Date date = new Date();
         user.setUpdateTime(date);
         User oldUser = userService.userFindById(user);
         String oldPassword = request.getParameter("oldPassword");
-
-
         log.info(user.toString());
         if (null == user.getPassword() && "".equals(user.getPassword())) {
             Msg msg = new Msg("failure", "更新密码失败，密码为空。");
             model.addAttribute("msg", msg);
             log.debug("更新密码失败，密码为空。");
-            return "admin_index";
+            return "user_index";
         } else if (null == oldPassword && "".equals(oldPassword)) {
             Msg msg = new Msg("failure", "更新密码失败，旧密码为空。");
             model.addAttribute("msg", msg);
             log.debug("更新密码失败，旧密码为空。");
-            return "admin_index";
+            return "user_index";
         }
         //验证密码
         String hashPassword = oldUser.getPassword();
@@ -377,7 +359,7 @@ public class UserController {
             Msg msg = new Msg("failure", "更新密码失败，旧密码验证未通过。");
             model.addAttribute("msg", msg);
             log.debug("更新密码失败，旧密码验证未通过。");
-            return "admin_index";
+            return "user_index";
         }
         //修改密码
         salt = CryptoUtils.getSalt();//盐值
@@ -389,66 +371,13 @@ public class UserController {
             Msg msg = new Msg("failure", "更新密码失败，未知错误。");
             model.addAttribute("msg", msg);
             log.debug("更新密码失败，未知错误。");
-            return "admin_index";
+            return "user_index";
         } else {
             Msg msg = new Msg("success", "更新密码成功。");
             model.addAttribute("msg", msg);
             session.setAttribute("user", userService.userFindById(user));
             log.debug("更新密码成功。");
-            return "admin_index";
+            return "user_index";
         }
     }
-
-    @RequestMapping(value = "/student/updatePassword", method = RequestMethod.POST)
-    public String studentUpdatePassword(User user, Model model, HttpSession session, HttpServletRequest request) {
-        Date date = new Date();
-        user.setUpdateTime(date);
-        User oldUser = userService.userFindById(user);
-        String oldPassword = request.getParameter("oldPassword");
-
-
-        log.info(user.toString());
-        if (null == user.getPassword() && "".equals(user.getPassword())) {
-            Msg msg = new Msg("failure", "更新密码失败，密码为空。");
-            model.addAttribute("msg", msg);
-            log.debug("更新密码失败，密码为空。");
-            return "stu/stu_index";
-        } else if (null == oldPassword && "".equals(oldPassword)) {
-            Msg msg = new Msg("failure", "更新密码失败，旧密码为空。");
-            model.addAttribute("msg", msg);
-            log.debug("更新密码失败，旧密码为空。");
-            return "stu/stu_index";
-        }
-        //验证密码
-        String hashPassword = oldUser.getPassword();
-        String salt = oldUser.getSalt();
-        log.debug("hashPassword: " + hashPassword);
-        log.debug("password: " + oldPassword);
-        log.debug("salt: " + salt);
-        if (!CryptoUtils.verify(hashPassword, oldPassword, salt)) {
-            Msg msg = new Msg("failure", "更新密码失败，旧密码验证未通过。");
-            model.addAttribute("msg", msg);
-            log.debug("更新密码失败，旧密码验证未通过。");
-            return "stu/stu_index";
-        }
-        //修改密码
-        salt = CryptoUtils.getSalt();//盐值
-        String password = user.getPassword();//传过来的明文密码
-        hashPassword = CryptoUtils.getHash(password, salt);//加密的密码
-        user.setSalt(salt);
-        user.setPassword(hashPassword);
-        if (!userService.userUpdateById(user)) {
-            Msg msg = new Msg("failure", "更新密码失败，未知错误。");
-            model.addAttribute("msg", msg);
-            log.debug("更新密码失败，未知错误。");
-            return "stu/stu_index";
-        } else {
-            Msg msg = new Msg("success", "更新密码成功。");
-            model.addAttribute("msg", msg);
-            session.setAttribute("user", userService.userFindById(user));
-            log.debug("更新密码成功。");
-            return "stu/stu_index";
-        }
-    }
-
 }

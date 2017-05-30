@@ -92,6 +92,24 @@ function showBasicForm() {
     $(".updateBasic").addClass('active');
 }
 // 修改信息切换 密码／基本信息 end
+
+
+// 管理员删除用户/修改用户
+function showUpdateUserForm() {
+    $("#DeleteUserForm").hide();
+    $("#UpdateUserForm").show();
+    $(".updateUser").addClass('active');
+    $(".deleteUser").removeClass('active');
+}
+function showDeleteUserForm() {
+    $("#UpdateUserForm").hide();
+    $("#DeleteUserForm").show();
+    $(".deleteUser").addClass('active');
+    $(".updateUser").removeClass('active');
+
+}
+
+
 // 作业列表 start
 $("#toggle-filter").click(function () {
     var flag = $(this).attr('aria-expanded');

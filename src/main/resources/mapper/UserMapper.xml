@@ -37,7 +37,7 @@
     <select id="selectUserById" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
         SELECT
         <include refid="Base_Column_Alias_List"/>
-        FROM `user` WHERE id = #{user.id};
+        FROM `user` WHERE id = #{user.id} and is_del != 1;
     </select>
 
     <update id="updateUserById" parameterType="org.jozif.entity.User">
@@ -127,7 +127,7 @@
     <select id="selectUserByEmail" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
         SELECT
         <include refid="Base_Column_Alias_List"/>
-        FROM user WHERE email = #{user.email};
+        FROM user WHERE email = #{user.email} and is_del != 1;
     </select>
 
 
@@ -135,19 +135,19 @@
     <select id="selectUserByPhoneNumber" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
         SELECT
         <include refid="Base_Column_Alias_List"/>
-        FROM user WHERE phone_number = #{user.phoneNumber};
+        FROM user WHERE phone_number = #{user.phoneNumber} and is_del != 1;
     </select>
 
     <select id="selectUserByNickName" parameterType="org.jozif.entity.User" resultType="org.jozif.entity.User">
         SELECT
         <include refid="Base_Column_Alias_List"/>
-        FROM user WHERE nick_name = #{user.nickName};
+        FROM user WHERE nick_name = #{user.nickName} and is_del != 1;
     </select>
 
     <select id="selectAllUser" resultType="org.jozif.entity.User">
         SELECT
         <include refid="Base_Column_Alias_List"/>
-        FROM user
+        FROM user WHERE is_del != 1;
     </select>
 
 
