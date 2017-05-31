@@ -127,9 +127,9 @@ public class Validator {
         return Pattern.matches(REGEX_IP_ADDR, ipAddr);
     }
 
-    public static void main(String[] args) {
-        String username = "513736920@qq.com";
-        System.out.println(Validator.isEmail(username));
-        System.out.println(Validator.isChinese(username));
-    }
+//    public static void main(String[] args) {
+//        String username = "513736920@qq.com";
+//        System.out.println(Validator.isEmail(username));
+//        System.out.println(Validator.isChinese(username));
+//    }
 }

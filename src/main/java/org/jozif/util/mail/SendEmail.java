@@ -125,8 +125,8 @@ public class SendEmail {
         }
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         new SendEmail().sendMailResetPassword("petrel2015@foxmail.com", "This is link!");
-    }
+    }*/
 
 }

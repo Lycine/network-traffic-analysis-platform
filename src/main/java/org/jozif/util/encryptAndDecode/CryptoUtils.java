@@ -10,7 +10,7 @@ import org.apache.commons.codec.binary.Base64;
 public class CryptoUtils {
 
 
-    public static void main(String[] ags){
+    /*public static void main(String[] ags){
         String salt = CryptoUtils.getSalt();
         String password = "A1an_Tur!ng9";
         String hashPassword = CryptoUtils.getHash(password, salt); 	//加密的密码
@@ -26,7 +26,7 @@ public class CryptoUtils {
         //"123456",
         //"BvxGo30MA43pLYbou32oCYsHgeRubAwLma99QIg2SJM=");
         System.out.println("Verify:" + result);		//校验结果
-    }
+    }*/
 
     private static int saltSize = 32;
     private static int iterations = 1000;
