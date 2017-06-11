@@ -4,6 +4,7 @@ package org.jozif.util.mail;
  * Created by hongyu on 16/9/8.
  */
 
+
 import lombok.extern.apachecommons.CommonsLog;
 
 import javax.mail.*;

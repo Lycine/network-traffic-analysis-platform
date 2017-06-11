@@ -202,8 +202,9 @@ public class PassController {
             if (nowSec < token.getExpireTime().getTime()) {
                 log.debug("token未过期");
                 String salt = CryptoUtils.getSalt();//盐值
-                String password = user.getPassword();//传过来的明文密码
+                String password = resetPasswordDto.getPassword();//传过来的明文密码
                 String hashPassword = CryptoUtils.getHash(password, salt);//加密的密码
+
                 user.setSalt(salt);
                 user.setPassword(hashPassword);
                 if (!userService.userUpdateById(user)) {
@@ -213,7 +214,7 @@ public class PassController {
                     log.debug("重置密码成功。");
                     tokenService.tokenExpiredDelete();
                     if (tokenService.tokenDeleteById(token)) {
-                        log.debug("已删除次token。tokenId: " + token.getId());
+                        log.debug("已删除token，tokenId: " + token.getId());
                     }
                     return "redirect:" + Global.FORGET_PASSWORD_PAGE_SUCCESS + "&token=0&uid=0";
                 }

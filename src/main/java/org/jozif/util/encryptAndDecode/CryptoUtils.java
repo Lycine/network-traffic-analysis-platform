@@ -9,11 +9,13 @@ import org.apache.commons.codec.binary.Base64;
 
 public class CryptoUtils {
 
-
-    /*public static void main(String[] ags){
+/*
+    public static void main(String[] ags){
         String salt = CryptoUtils.getSalt();
-        String password = "A1an_Tur!ng9";
+        salt = "Wg69ux3tY1ldcXnQnxsXXv6cND/0gOfoe1B8zfb5oqo=";
+        String password = "hy19950714";
         String hashPassword = CryptoUtils.getHash(password, salt); 	//加密的密码
+        hashPassword = "AFBawU5I1aM2W7APnx5pVCyNzx0sUDRtJsjMU3BadwcRkbFOnbJzWcqNqVHK6PxVOuwxpReAHHYCR6UKHDHnWdc=";
         System.out.println("hashPassword:" + hashPassword);
         System.out.println("salt:" + salt);  		//盐值
         System.out.println("password:" + password);
